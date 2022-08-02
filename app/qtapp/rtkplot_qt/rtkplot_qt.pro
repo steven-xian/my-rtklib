@@ -25,12 +25,14 @@ qtHaveModule(webenginewidgets) {
         DEFINES+= QWEBKIT
     }
 }
-include(../../RTKLib.pri)
+include(../../../RTKLib.pri)
+
+QMAKE_LFLAGS += /STACK:64000000
 
 TARGET = rtkplot_qt
 TEMPLATE = app
 
-INCLUDEPATH += ../../src/ ../appcmn_qt ../rtkplot_qt
+INCLUDEPATH += ../../../src/ ../appcmn_qt ../rtkplot_qt
 
 linux{
     RTKLIB =../../src/libRTKLib.a
@@ -38,7 +40,7 @@ linux{
 }
 win32 {
     CONFIG(debug) {
-        RTKLIB = ../../src/debug/libRTKLib.a
+        RTKLIB = ../../../src/debug/RTKLib.lib
     } else {
         RTKLIB =../../src/release/libRTKLib.a
     }
@@ -49,7 +51,7 @@ win32 {
 PRE_TARGETDEPS = $${RTKLIB}
 
 SOURCES += \
-    ../appcmn_qt/aboutdlg.cpp \
+    ../appcmn_qt/appcmn_qt/aboutdlg.cpp \
     conndlg.cpp \
     geview.cpp \
     mapdlg.cpp \
@@ -66,20 +68,20 @@ SOURCES += \
     ../appcmn_qt/refdlg.cpp \
     ../appcmn_qt/viewer.cpp \
     ../appcmn_qt/vieweropt.cpp \
-    ../appcmn_qt/cmdoptdlg.cpp \
+    ../appcmn_qt/appcmn_qt/cmdoptdlg.cpp \
     ../appcmn_qt/fileoptdlg.cpp \
     ../appcmn_qt/serioptdlg.cpp \
     ../appcmn_qt/tcpoptdlg.cpp \
     ../appcmn_qt/keydlg.cpp \
     ../appcmn_qt/graph.cpp \
-    ../appcmn_qt/console.cpp \
+    ../appcmn_qt/appcmn_qt/console.cpp \
     ../appcmn_qt/tspandlg.cpp \
     fileseldlg.cpp \
     ../appcmn_qt/gmview.cpp \
     vmapdlg.cpp
 
 HEADERS  += \
-    ../appcmn_qt/aboutdlg.h \
+    ../appcmn_qt/appcmn_qt/aboutdlg.h \
     conndlg.h \
     geview.h \
     mapdlg.h \
@@ -91,20 +93,20 @@ HEADERS  += \
     ../appcmn_qt/refdlg.h \
     ../appcmn_qt/viewer.h \
     ../appcmn_qt/vieweropt.h \
-    ../appcmn_qt/cmdoptdlg.h \
+    ../appcmn_qt/appcmn_qt/cmdoptdlg.h \
     ../appcmn_qt/fileoptdlg.h \
     ../appcmn_qt/serioptdlg.h \
     ../appcmn_qt/tcpoptdlg.h \
     ../appcmn_qt/keydlg.h \
     ../appcmn_qt/graph.h \
-    ../appcmn_qt/console.h \
+    ../appcmn_qt/appcmn_qt/console.h \
     ../appcmn_qt/tspandlg.h \
     fileseldlg.h \
     ../appcmn_qt/gmview.h \
     vmapdlg.h
 
 FORMS    += \
-    ../appcmn_qt/aboutdlg.ui \
+    ../appcmn_qt/appcmn_qt/aboutdlg.ui \
     conndlg.ui \
     geview.ui \
     mapdlg.ui \
@@ -116,7 +118,7 @@ FORMS    += \
     ../appcmn_qt/refdlg.ui \
     ../appcmn_qt/viewer.ui \
     ../appcmn_qt/vieweropt.ui \
-    ../appcmn_qt/cmdoptdlg.ui \
+    ../appcmn_qt/appcmn_qt/cmdoptdlg.ui \
     ../appcmn_qt/fileoptdlg.ui \
     ../appcmn_qt/serioptdlg.ui \
     ../appcmn_qt/tcpoptdlg.ui \

@@ -5,7 +5,7 @@
 #include "serioptdlg.h"
 #include "fileoptdlg.h"
 #include "tcpoptdlg.h"
-#include "cmdoptdlg.h"
+#include "appcmn_qt/cmdoptdlg.h"
 #include "conndlg.h"
 
 //---------------------------------------------------------------------------

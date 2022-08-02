@@ -932,7 +932,7 @@ void Plot::SaveSnrMp(const QString &file)
             if (Obs.data[j].sat!=i+1) continue;
             
             for (k=0;k<NFREQ+NEXOBS;k++) {
-                if (strstr(code2obs(Obs.data[j].code[k],NULL),code)) break;
+                if (strstr(code2obs(Obs.data[j].code[k]),code)) break;
             }
             if (k>=NFREQ+NEXOBS) continue;
             
@@ -983,7 +983,8 @@ void Plot::SaveElMask(const QString &file)
 // connect to external sources ----------------------------------------------
 void Plot::Connect(void)
 {
-    char cmd[1024],path[1024],buff[MAXSTRPATH],*name[2]={"",""},*p;
+    char cmd[1024],path[1024],buff[MAXSTRPATH],*p;
+    char const *name[2]={"",""};
     int i,mode=STR_MODE_R;
     
     trace(3,"Connect\n");
@@ -1195,7 +1196,7 @@ void Plot::UpdateMp(void)
         for (j=0;j<NFREQ+NEXOBS;j++) {
             Mp[j][i]=0.0;
             
-            code2obs(data->code[j],&f1);
+            code2obs(data->code[j]);
             
             if (sys==SYS_CMP) {
                 if      (f1==5) f1=2; /* B2 */
@@ -1206,8 +1207,10 @@ void Plot::UpdateMp(void)
             else if (sys==SYS_CMP) f2=f1==1?2:1; /* B1/B2 */
             else                   f2=f1==1?2:1; /* L1/L2 */
             
-            lam1=satwavelen(data->sat,f1-1,&Nav);
-            lam2=satwavelen(data->sat,f2-1,&Nav);
+//            lam1=satwavelen(data->sat,f1-1,&Nav);
+//            lam2=satwavelen(data->sat,f2-1,&Nav);
+            lam1=CLIGHT / sat2freq(data->sat, data->code[0], &Nav);
+            lam2=CLIGHT / sat2freq(data->sat, data->code[1], &Nav);
             if (lam1==0.0||lam2==0.0) continue;
             
             if (data->P[j]!=0.0&&data->L[j]!=0.0&&data->L[f2-1]!=0.0) {
@@ -1223,7 +1226,7 @@ void Plot::UpdateMp(void)
         for (j=k=n=0,B=0.0;j<Obs.n;j++) {
             if (Obs.data[j].sat!=sat) continue;
             
-            code2obs(Obs.data[j].code[i],&f1);
+            code2obs(Obs.data[j].code[i]);
             
             if (sys==SYS_CMP) {
                 if      (f1==5) f1=2; /* B2 */

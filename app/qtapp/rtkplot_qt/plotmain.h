@@ -7,7 +7,7 @@
 #include <QMainWindow>
 
 #include "graph.h"
-#include "console.h"
+#include "appcmn_qt/console.h"
 #include "rtklib.h"
 
 #include "ui_plotmain.h"

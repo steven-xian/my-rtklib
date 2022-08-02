@@ -952,7 +952,7 @@ void Plot::DrawObsSlip(QPainter &c,double *yp)
         if (ShowHalfC) {
             slip=0;
             for (j=0;j<NFREQ+NEXOBS;j++) {
-                if ((!*code||strstr(code2obs(obs->code[j],NULL),code))&&
+                if ((!*code||strstr(code2obs(obs->code[j]),code))&&
                     (obs->LLI[j]&2)) slip=1;
             }
             if (slip) GraphR->DrawPoly(c,ps,2,MColor[0][0],0);
@@ -961,7 +961,7 @@ void Plot::DrawObsSlip(QPainter &c,double *yp)
             slip=0;
             if (ShowSlip==2) { // LLI
                 for (j=0;j<NFREQ+NEXOBS;j++) {
-                    if ((!*code||strstr(code2obs(obs->code[j],NULL),code))&&
+                    if ((!*code||strstr(code2obs(obs->code[j]),code))&&
                         (obs->LLI[j]&1)) slip=1;
                 }
             }
@@ -1148,7 +1148,7 @@ void Plot::DrawSky(QPainter &c,int level)
             slip=0;
             if (ShowSlip==2) { // LLI
                 for (j=0;j<NFREQ+NEXOBS;j++) {
-                    if ((!*code||strstr(code2obs(obs->code[j],NULL),code))&&
+                    if ((!*code||strstr(code2obs(obs->code[j]),code))&&
                         (obs->LLI[j]&1)) slip=1;
                 }
             }
@@ -1243,14 +1243,14 @@ void Plot::DrawSky(QPainter &c,int level)
             }
             else {
                 for (j=0;j<NFREQ+NEXOBS;j++) {
-                    if (strstr(code2obs(obs->code[j],NULL),code)) break;
+                    if (strstr(code2obs(obs->code[j]),code)) break;
                 }
                 if (j>=NFREQ+NEXOBS) continue;
                 
                 s+=QString("%1%2%3 : %4 : %5 : %6").arg(obs->P[j]==0.0?"-":"C")
                               .arg(obs->L[j]==0.0?"-":"L").arg(obs->D[j]==0.0?"-":"D")
                               .arg(obs->SNR[j]*0.25,4,'f',1,QChar('0')).arg(obs->LLI[j])
-                              .arg(code2obs(obs->code[j],NULL));
+                              .arg(code2obs(obs->code[j]));
             }
             QColor col=ObsColor(obs,Az[i],El[i]);
             p2.ry()+=hh;
@@ -1502,7 +1502,7 @@ void Plot::DrawSnr(QPainter &c,int level)
                     if (Obs.data[j].sat!=sat) continue;
                     
                     for (k=0;k<NFREQ+NEXOBS;k++) {
-                        if (strstr(code2obs(Obs.data[j].code[k],NULL),code)) break;
+                        if (strstr(code2obs(Obs.data[j].code[k]),code)) break;
                     }
                     if (k>=NFREQ+NEXOBS) continue;
                     
@@ -1647,7 +1647,7 @@ void Plot::DrawSnrE(QPainter &c,int level)
                 if (Obs.data[j].sat!=sat) continue;
                 
                 for (k=0;k<NFREQ+NEXOBS;k++) {
-                    if (strstr(code2obs(Obs.data[j].code[k],NULL),code)) break;
+                    if (strstr(code2obs(Obs.data[j].code[k]),code)) break;
                 }
                 if (k>=NFREQ+NEXOBS) continue;
                 if (El[j]<=0.0) continue;
@@ -1772,7 +1772,7 @@ void Plot::DrawMpS(QPainter &c,int level)
             if (Obs.data[i].sat!=sat) continue;
             
             for (j=0;j<NFREQ+NEXOBS;j++) {
-                if (strstr(code2obs(Obs.data[i].code[j],NULL),code)) break;
+                if (strstr(code2obs(Obs.data[i].code[j]),code)) break;
             }
             if (j>=NFREQ+NEXOBS) continue;
             if (El[i]<=0.0) continue;
@@ -1798,7 +1798,7 @@ void Plot::DrawMpS(QPainter &c,int level)
             obs=&Obs.data[i];
             if (SatMask[obs->sat-1]||!SatSel[obs->sat-1]||El[i]<=0.0) continue;
             for (j=0;j<NFREQ+NEXOBS;j++) {
-                if (strstr(code2obs(obs->code[j],NULL),code)) break;
+                if (strstr(code2obs(obs->code[j]),code)) break;
             }
             if (j>=NFREQ+NEXOBS) continue;
             col=MpColor(!Mp[j]?0.0:Mp[j][i]);

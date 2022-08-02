@@ -19,7 +19,7 @@ QString color2String(const QColor &c){
 
 //---------------------------------------------------------------------------
 extern "C" {
-int showmsg(char *format,...) {Q_UNUSED(format); return 0;}
+int showmsg(const char *format,...) {Q_UNUSED(format); return 0;}
 }
 //---------------------------------------------------------------------------
 const QString PTypes[]={
@@ -326,7 +326,7 @@ QColor Plot::ObsColor(const obsd_t *obs, double az, double el)
     }
     else if (*code) {
         for (i=0;i<NFREQ+NEXOBS;i++) {
-            if (!strstr(code2obs(obs->code[i],NULL),code)) continue;
+            if (!strstr(code2obs(obs->code[i]),code)) continue;
             color=SnrColor(obs->SNR[i]*0.25);
             break;
         }
@@ -465,8 +465,8 @@ QString Plot::LatLonStr(const double *pos, int ndec)
 
     }
     else {
-        deg2dms(pos[0]*R2D,dms1);
-        deg2dms(pos[1]*R2D,dms2);
+        deg2dms(pos[0]*R2D,dms1,ndec-5);
+        deg2dms(pos[1]*R2D,dms2,ndec-5);
         s=QStringLiteral("%1%2 %3' %4\" %5 %6%7 %8' %9\" %10")
                   .arg(fabs(dms1[0]),3,'f',0).arg(degreeChar).arg(dms1[1],2,'f',0,QChar('0')).arg(dms1[2],ndec-2,'f',ndec-5,QChar('0')).arg(pos[0]<0.0?"S":"N")
                   .arg(fabs(dms2[0]),4,'f',0).arg(degreeChar).arg(dms2[1],2,'f',0,QChar('0')).arg(dms2[2],ndec-2,'f',ndec-5,QChar('0')).arg(pos[1]<0.0?"W":"E");

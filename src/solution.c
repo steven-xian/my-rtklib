@@ -274,10 +274,10 @@ static int decode_nmeagga(char **val, int n, sol_t *sol)
         trace(3,"invalid nmea gga format\n");
         return 0;
     }
-    if (sol->time.time==0) {
-        trace(3,"no date info for nmea gga\n");
-        return 0;
-    }
+//    if (sol->time.time==0) {
+//        trace(3,"no date info for nmea gga\n");
+//        return 0;
+//    }
     pos[0]=(ns=='N'?1.0:-1.0)*dmm2deg(lat)*D2R;
     pos[1]=(ew=='E'?1.0:-1.0)*dmm2deg(lon)*D2R;
     pos[2]=alt+msl;
@@ -334,7 +334,7 @@ static int decode_nmea(char *buff, sol_t *sol)
     for (p=buff;*p&&n<MAXFIELD;p=q+1) {
         if ((q=strchr(p,','))||(q=strchr(p,'*'))) {
             val[n++]=p; *q='\0';
-        }
+        5}
         else break;
     }
     if (n<1) {
